@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        def pip = "C:/Users/Achraf/AppData/Local/Programs/Python/Python39-32/Scripts/pip"
-        def python = "C:/Users/Achraf/AppData/Local/Programs/Python/Python39-32/python"
+        def pip = "C:/Users/Achraf/AppData/Local/Programs/Python/Python39/Scripts/pip"
+        def python = "C:/Users/Achraf/AppData/Local/Programs/Python/Python39/python"
     }
 
     stages {
-        stage('clone from github'){
+        stage('Clone from github'){
             steps{
-                dir("CI_with_github"){
+                dir("LivrableCICD"){
                     echo 'clone git repo'
                     git branch: 'dev', credentialsId: 'jenkins', url: 'git@github.com:ACHRAf-by/LivrableCI-CD.git'
                     bat 'dir'
@@ -18,7 +18,7 @@ pipeline {
         }
         stage('build from github') {
             steps {
-                dir("CI_with_github"){
+                dir("LivrableCICD"){
                     echo 'pip install -r requirements.txt'
                     bat "${pip} install -r requirements.txt"
                 }
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('test from github') {
             steps {
-                dir("CI_with_github"){
+                dir("LivrableCICD"){
                     echo "pyhton -m unittest"
                     bat "${python} -m unittest"
                 }
@@ -34,7 +34,7 @@ pipeline {
         }
         stage('deploying from github'){
             steps{
-                dir("CI_with_github"){
+                dir("LivrableCICD"){
                     echo "docker"
                     bat 'docker build -t app .'
                     bat 'docker run -dp 5001:5000 app'
