@@ -11,7 +11,7 @@ pipeline {
             steps{
                 dir("CI_with_github"){
                     echo 'clone git repo'
-                    git branch: 'develop', credentialsId: 'jenkins', url: 'git@github.com:ACHRAf-by/LivrableCI-CD.git'
+                    git branch: 'develop', credentialsId: 'jenkins-user', url: 'git@github.com:ACHRAf-by/LivrableCI-CD.git'
                     bat 'dir'
                 }
             }
