@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        def pip = "C:/Users/erand/AppData/Local/Programs/Python/Python311/Scripts/pip"
-        def python = "C:/Users/erand/AppData/Local/Programs/Python/Python311/python"
+        def pip = "C:/Users/Achraf/AppData/Local/Programs/Python/Python39-32/Scripts/pip"
+        def python = "C:/Users/Achraf/AppData/Local/Programs/Python/Python39-32/python"
     }
 
     stages {
@@ -11,7 +11,7 @@ pipeline {
             steps{
                 dir("CI_with_github"){
                     echo 'clone git repo'
-                    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/eranda98/CI-with-github.git'
+                    git branch: 'dev', changelog: false, poll: false, url: 'https://github.com/ACHRAf-by/LivrableCI-CD.git'
                     bat 'dir'
                 }
             }
