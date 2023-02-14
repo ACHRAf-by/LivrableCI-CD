@@ -1,34 +1,45 @@
-//JenkinsFile start
 pipeline {
     agent any
 
+    environment {
+        def pip = "C:/Users/erand/AppData/Local/Programs/Python/Python311/Scripts/pip"
+        def python = "C:/Users/erand/AppData/Local/Programs/Python/Python311/python"
+    }
+
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
+        stage('clone from github'){
+            steps{
+                dir("CI_with_github"){
+                    echo 'clone git repo'
+                    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/eranda98/CI-with-github.git'
+                    bat 'dir'
+                }
             }
         }
-        stage('Test') {
+        stage('build from github') {
             steps {
-                echo 'Testing..'
+                dir("CI_with_github"){
+                    echo 'pip install -r requirements.txt'
+                    bat "${pip} install -r requirements.txt"
+                }
             }
         }
-        stage('Deploy') {
+        stage('test from github') {
             steps {
-                echo 'Deploying....'
+                dir("CI_with_github"){
+                    echo "pyhton -m unittest"
+                    bat "${python} -m unittest"
+                }
             }
         }
-    }
-}
-// Script //
-node {
-    stage('Build') {
-        echo 'Building....'
-    }
-    stage('Testing') {
-        echo 'Building....'
-    }
-    stage('Deploy') {
-        echo 'Deploying....'
+        stage('deploying from github'){
+            steps{
+                dir("CI_with_github"){
+                    echo "docker"
+                    bat 'docker build -t app .'
+                    bat 'docker run -dp 5001:5000 app'
+                }
+            }
+        }
     }
 }
