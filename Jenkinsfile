@@ -3,9 +3,7 @@ pipeline {
     
     environment {
         
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        GITHUB_AUTH_CREDENTIALS : credentials['github']
-    
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')    
     }
     
     stages {
@@ -32,7 +30,7 @@ pipeline {
                     bat "git checkout dev"
                     bat "git checkout -b staging"
                     
-                    sshagent(GITHUB_AUTH_CREDENTIALS){
+                    sshagent(credentials: ['github']){
                         echo "create remote origin/staging and push code"
                         bat 'git push -u origin staging'
                     } 
