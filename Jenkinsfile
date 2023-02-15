@@ -4,7 +4,7 @@ pipeline {
     environment {
         
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        GITHUB_AUTH_CREDENTIALS = credentials('github')
+        GITHUB_AUTH_CREDENTIALS = credentials['github']
     
     }
     
