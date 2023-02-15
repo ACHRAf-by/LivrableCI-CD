@@ -25,6 +25,7 @@ pipeline {
                     '''
                     bat "git checkout dev"
                     bat "git checkout -b staging"
+                    
                 }
             }
         }
@@ -57,6 +58,21 @@ pipeline {
                     bat 'docker build -t app .'
                     echo "Run image"
                     bat 'docker run -dp 5001:5000 app'
+                }
+            }
+        }
+        
+    post {
+        always {
+            stage('Cleanup') {
+                steps {
+                    // Stop and remove container
+                    //sh 'docker stop my-container'
+                    //sh 'docker rm my-container'
+                    
+                    // Remove unused images and volumes
+                    //sh 'docker image prune -af'
+                    //sh 'docker volume prune -f'
                 }
             }
         }
