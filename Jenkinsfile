@@ -81,8 +81,9 @@ pipeline {
     }
     post {
         always {
-            stage('Cleanup') {
-                steps {
+            bat 'docker logout'
+            //stage('Cleanup') {
+                //steps {
                     // Stop and remove container
                     //sh 'docker stop my-container'
                     //sh 'docker rm my-container'
