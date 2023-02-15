@@ -28,6 +28,11 @@ pipeline {
                 }
             }
         }
+        stage('Stop Docker container') {
+            steps {
+                bat "docker stop $(docker ps -a ^| grep app ^| awk '{print $1}')"
+            }
+        }
         stage('deploying from github'){
            
             steps{
