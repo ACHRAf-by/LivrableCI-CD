@@ -32,6 +32,8 @@ pipeline {
             steps{
                 dir("LivrableCICD"){
                     echo "docker"
+                    bat 'docker container ls'
+                    bat 'docker rm -f app'
                     bat 'docker build -t app .'
                     bat 'docker run -dp 5001:5000 app'
                 }
