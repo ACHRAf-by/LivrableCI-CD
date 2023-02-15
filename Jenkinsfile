@@ -36,6 +36,7 @@ pipeline {
                     echo "docker"
                     bat 'docker build -t app .'
                     bat 'docker run -dp 5001:5000 app'
+                    bat 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=app --format="{{.ID}}"))'
                 }
             }
         }
