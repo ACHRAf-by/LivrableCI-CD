@@ -18,7 +18,7 @@ pipeline {
                 dir("LivrableCICD"){
                     echo "Creating staging branch from dev branch"
                     bat '''
-                    if exist .git\refs\heads\staging (
+                    if exist .git/refs/heads/staging (
                         git checkout main
                         git branch -D staging
                     )
