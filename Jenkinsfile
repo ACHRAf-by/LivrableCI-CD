@@ -1,6 +1,11 @@
 pipeline {
     agent any
     
+    environment {
+        
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    
+    }
     
     stages {
         stage('Clone from github'){
@@ -62,19 +67,31 @@ pipeline {
             }
         }
         
-    post {
-        always {
-            stage('Cleanup') {
-                steps {
-                    // Stop and remove container
-                    //sh 'docker stop my-container'
-                    //sh 'docker rm my-container'
-                    
-                    // Remove unused images and volumes
-                    //sh 'docker image prune -af'
-                    //sh 'docker volume prune -f'
+        stage('logging into dockerhub') {
+            steps {
+                bat "docker login -u=${DOCKERHUB_CREDENTIALS_USR} -p=${DOCKERHUB_CREDENTIALS_PSW}"
+            }
+        }
+        
+        stage('pushing image to dockerhub') {
+            steps {
+                bat 'docker push app:latest'
+            }
+        }
+        
+        post {
+            always {
+                stage('Cleanup') {
+                    steps {
+                        // Stop and remove container
+                        //sh 'docker stop my-container'
+                        //sh 'docker rm my-container'
+
+                        // Remove unused images and volumes
+                        //sh 'docker image prune -af'
+                        //sh 'docker volume prune -f'
+                    }
                 }
             }
         }
-    }
 }
