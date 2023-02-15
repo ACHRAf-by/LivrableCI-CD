@@ -34,9 +34,9 @@ pipeline {
             steps{
                 dir("LivrableCICD"){
                     echo "docker"
-                    bat 'FOR /f "tokens=*" %i IN (\'docker ps -a -q --filter "ancestor=app"\') DO docker stop %i'
                     bat 'docker build -t app .'
                     bat 'docker run -dp 5001:5000 app'
+                    bat 'FOR /f "tokens=*" %i IN (\'docker ps -a -q --filter "ancestor=app"\') DO docker stop %i'
                 }
             }
         }
