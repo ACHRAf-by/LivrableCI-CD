@@ -34,9 +34,11 @@ pipeline {
             steps{
                 dir("LivrableCICD"){
                     echo "docker"
+                    
+                    powershell 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=app --format="{{.ID}}"))'
                     bat 'docker build -t app .'
                     bat 'docker run -dp 5001:5000 app'
-                    powershell 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=app --format="{{.ID}}"))'
+                    
                 }
             }
         }
