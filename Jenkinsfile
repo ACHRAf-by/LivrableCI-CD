@@ -31,12 +31,11 @@ pipeline {
                     '''
                     bat "git checkout dev"
                     bat "git checkout -b staging"
-                    node {
-                        sshagent(GITHUB_AUTH_CREDENTIALS){
-                            echo "create remote origin/staging and push code"
-                            bat 'git push -u origin staging'
-                        }
-                    }
+                    
+                    sshagent(GITHUB_AUTH_CREDENTIALS){
+                        echo "create remote origin/staging and push code"
+                        bat 'git push -u origin staging'
+                    } 
                 }
             }
         }
