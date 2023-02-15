@@ -58,11 +58,11 @@ pipeline {
                 dir("LivrableCICD"){
                     echo "docker"
                     echo "Stop running container using the image name to free the port"
-                    powershell 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=app --format="{{.ID}}"))'
+                    powershell 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=abenyahya98/app --format="{{.ID}}"))'
                     echo "Build image"
-                    bat 'docker build -t app .'
+                    bat 'docker build -t abenyahya98/app .'
                     echo "Run image"
-                    bat 'docker run -dp 5001:5000 app'
+                    bat 'docker run -dp 5001:5000 abenyahya98/app'
                 }
             }
         }
