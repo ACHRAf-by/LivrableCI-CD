@@ -36,6 +36,7 @@ pipeline {
                     //bat 'docker build -t app .'
                     //bat 'docker run -dp 5001:5000 app'
                     bat 'docker run --rm app:latest'
+                    bat 'docker run -dp 5001:5000 app
                 }
             }
         }
