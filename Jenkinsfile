@@ -32,11 +32,10 @@ pipeline {
             steps{
                 dir("LivrableCICD"){
                     echo "docker"
-                    bat 'docker build -t app:latest .'
-                    //bat 'docker build -t app .'
-                    //bat 'docker run -dp 5001:5000 app'
-                    bat 'docker run --rm app:latest'
-                    bat 'docker run -dp 5001:5000 app
+                    bat 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=app --format="{{.ID}}"))'
+
+                    bat 'docker build -t app .'
+                    bat 'docker run -dp 5001:5000 app'
                 }
             }
         }
