@@ -75,7 +75,7 @@ pipeline {
         
         stage('pushing image to dockerhub') {
             steps {
-                bat 'docker push app:latest'
+                bat 'docker push abenyahya98/app:latest'
             }
         }
     }
