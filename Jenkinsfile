@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        def pip = "C:/Users/Achraf/AppData/Local/Programs/Python/Python39/Scripts/pip3"
-        def python = "C:/Users/Achraf/AppData/Local/Programs/Python/Python39/python"
+        def pip = "C:\Users\Achraf\AppData\Local\Programs\Python\Python39\Scripts\pip"
+        def python = "C:\Users\Achraf\AppData\Local\Programs\Python\Python39\python"
     }
 
     stages {
