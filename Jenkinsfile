@@ -28,13 +28,7 @@ pipeline {
                 }
             }
         }
-        stage('Liste docker containers') {
-            steps {
-                bat 'docker ps -a -q --filter="name=app"'
-                bat 'docker stop $(docker ps -q --filter ancestor=app)'
-
-            }
-        }
+        
         stage('deploying from github'){
            
             steps{
