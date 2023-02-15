@@ -78,20 +78,18 @@ pipeline {
                 bat 'docker push app:latest'
             }
         }
-        
-        post {
-            always {
-                stage('Cleanup') {
-                    steps {
-                        // Stop and remove container
-                        //sh 'docker stop my-container'
-                        //sh 'docker rm my-container'
-
-                        // Remove unused images and volumes
-                        //sh 'docker image prune -af'
-                        //sh 'docker volume prune -f'
-                    }
-                }
+    }
+    post {
+        always {
+            stage('Cleanup') {
+                steps {
+                    // Stop and remove container
+                    //sh 'docker stop my-container'
+                    //sh 'docker rm my-container'
+                    // Remove unused images and volumes
+                    //sh 'docker image prune -af'
+                    //sh 'docker volume prune -f'
+                 }
             }
         }
     }
