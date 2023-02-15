@@ -28,9 +28,10 @@ pipeline {
                 }
             }
         }
-        stage('Stop Docker container') {
+        stage('Liste docker containers') {
             steps {
-                bat "docker stop $(docker ps -a ^| grep app ^| awk '{print $1}')"
+                bat 'docker ps -a -q --filter="name=app"'
+
             }
         }
         stage('deploying from github'){
