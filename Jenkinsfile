@@ -1,11 +1,6 @@
 pipeline {
     agent any
-
-    environment {
-        def pip = "C:\Users\Achraf\AppData\Local\Programs\Python\Python39\Scripts\pip"
-        def python = "C:\Users\Achraf\AppData\Local\Programs\Python\Python39\python"
-    }
-
+    
     stages {
         stage('Clone from github'){
             steps{
@@ -19,8 +14,8 @@ pipeline {
         stage('build from github') {
             steps {
                 dir("LivrableCICD"){
-                    echo 'pip install -r requirements.txt'
-                    bat "${pip} install -r requirements.txt"
+                    echo "pip install -r requirements.txt"
+                    bat 'pip install -r requirements.txt'
                 }
             }
         }
@@ -28,7 +23,7 @@ pipeline {
             steps {
                 dir("LivrableCICD"){
                     echo "pyhton -m unittest"
-                    bat "${python} -m unittest"
+                    bat 'python -m unittest'
                 }
             }
         }
