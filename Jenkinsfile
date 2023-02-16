@@ -32,7 +32,7 @@ pipeline {
                     
                     sshagent(credentials: ['github']){
                         echo "create remote origin/staging and push code"
-                        bat 'git push -u origin staging'
+                        bat 'git push -u origin staging --tags'
                     } 
                 }
             }
