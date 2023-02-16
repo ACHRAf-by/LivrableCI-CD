@@ -32,13 +32,13 @@ pipeline {
                     
                     // credentialsId here is the credentials you have set up in Jenkins for pushing
                     // to that repository using username and password.
-                    withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github-auth', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
                         bat "git push --set-upstream origin staging"
                     }
 
                     // SSH private key authentication using ssh step from the ssh-agent plugin
-                    //sshagent(credentials: ['github']){
-                    //    echo "create remote origin/staging and push code"
+                    //sshagent(credentials: ['github-sshagent']){
+                    //   echo "create remote origin/staging and push code"
                     //   bat 'git push -u origin staging --tags'
                     //} 
                 }
