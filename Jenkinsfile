@@ -40,10 +40,12 @@ pipeline {
                     // credentialsId here is the credentials you have set up in Jenkins for pushing
                     // to that repository using username and password.
                     //withCredentials([usernamePassword(credentialsId: 'github-auth', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
+                        //bat 'git push --set-upstream origin staging'
                     //} 
                     
                     bat '''
-                    ssh-agent bash -c "ssh-add $SSH_CREDENTIALS ; git push origin staging"
+                        git config --global core.sshCommand "ssh -i %SSH_CREDENTIALS%"
+                        ssh-agent cmd /c "ssh-add %SSH_CREDENTIALS% & git push --set-upstream origin staging"
                     '''
                 }
             }
