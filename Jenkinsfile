@@ -4,7 +4,7 @@ pipeline {
     environment {
         
         DOCKERHUB_CREDENTIALS = credentials('dockerhub') 
-        SSH_CREDENTIALS = credentials('ssh-credentials')
+        //SSH_CREDENTIALS = credentials('ssh-credentials')
 
     }
     
