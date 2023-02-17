@@ -40,10 +40,6 @@ pipeline {
                     //withCredentials([usernamePassword(credentialsId: 'github-auth', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
                         //bat 'git push --set-upstream origin staging'
                     //} 
-                    
-                    //bat '''
-                    //    ssh-agent cmd /c "ssh-add %SSH_CREDENTIALS% && git push --set-upstream origin staging"
-                    //'''
                 }
             }
         }
