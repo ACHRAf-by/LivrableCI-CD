@@ -43,10 +43,10 @@ pipeline {
                         //bat 'git push --set-upstream origin staging'
                     //} 
                     
-                    bat '''
-                        git config --global core.sshCommand "ssh -i %SSH_CREDENTIALS%"
-                        ssh-agent cmd /c "ssh-add %SSH_CREDENTIALS% && git push --set-upstream origin staging"
-                    '''
+                    //bat '''
+                    //    git config --global core.sshCommand "ssh -i %SSH_CREDENTIALS%"
+                    //    ssh-agent cmd /c "ssh-add %SSH_CREDENTIALS% && git push --set-upstream origin staging"
+                    //'''
                 }
             }
         }
