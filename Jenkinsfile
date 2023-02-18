@@ -17,74 +17,72 @@ pipeline {
 			}
 		    }
 		}
+		stage('Create staging branch') {
+			steps {
+				dir("LivrableCICD") {
+					echo "Creating staging branch from dev branch"
+					bat '''
+					if exist .git/refs/heads/staging (
+					git checkout main
+					git branch -D staging
+					)
+					'''
+					bat "git checkout dev"
+					bat "git checkout -b staging"
 
-        stage('Create staging branch') {
-            steps {
-                dir("LivrableCICD") {
-                    echo "Creating staging branch from dev branch"
-                    bat '''
-                    if exist .git/refs/heads/staging (
-                        git checkout main
-                        git branch -D staging
-                    )
-                    '''
-                    bat "git checkout dev"
-                    bat "git checkout -b staging"
-
-                    //SSH private key authentication using ssh step from the ssh-agent plugin
-                    sshagent(credentials: ['github-sshagent']){
-                        bat 'git push --set-upstream origin staging'
-		    }
+					//SSH private key authentication using ssh step from the ssh-agent plugin
+					sshagent(credentials: ['github-sshagent']){
+					bat 'git push --set-upstream origin staging'
+					}
 					// credentialsId here is the credentials you have set up in Jenkins for pushing
-                // to that repository using username and password.
-                //withCredentials([usernamePassword(credentialsId: 'github-auth', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
-                //bat 'git push --set-upstream origin staging'
-                //}
-			
-                }
-            }
-        }
-        stage('build from github') {
-            steps {
-                dir("LivrableCICD") {
-                echo "pip install -r requirements.txt"
-                //bat 'pip install -r requirements.txt'
-                }
-            }
-        }
-        stage('test from github') {
-            steps {
-                dir("LivrableCICD") {
-                echo "pyhton -m unittest"
-                //bat 'python -m unittest'
-                }
-            }
-	}
-        stage('deploying from github') {
-            steps {
-                dir("LivrableCICD") {
-                    echo "docker"
-                    //echo "Stop running container using the image name to free the port"
-                    //powershell 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=abenyahya98/app --format="{{.ID}}"))'
-                    //echo "Build image"
-                    //bat 'docker build -t abenyahya98/app .'
-                    //echo "Run image"
-                    //bat 'docker run -dp 5001:5000 abenyahya98/app'
-                }
-            }
-        }	
-        //stage('logging into dockerhub') {
-            //steps {
-            //bat "docker login -u=${DOCKERHUB_CREDENTIALS_USR} -p=${DOCKERHUB_CREDENTIALS_PSW}"
-            //}
-        //}
+					// to that repository using username and password.
+					//withCredentials([usernamePassword(credentialsId: 'github-auth', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
+						//bat 'git push --set-upstream origin staging'
+					//}
+                		}
+            		}
+        	}
+        	stage('build from github') {
+			steps {
+				dir("LivrableCICD") {
+					echo "pip install -r requirements.txt"
+					//bat 'pip install -r requirements.txt'
+				}
+			}
+		}
+		stage('test from github') {
+			steps {
+				dir("LivrableCICD") {
+					echo "pyhton -m unittest"
+					//bat 'python -m unittest'
+				}
+			}
+		}
+		stage('deploying from github') {
+			steps {
+				dir("LivrableCICD") {
+					echo "docker"
+					//echo "Stop running container using the image name to free the port"
+					//powershell 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=abenyahya98/app --format="{{.ID}}"))'
+					//echo "Build image"
+					//bat 'docker build -t abenyahya98/app .'
+					//echo "Run image"
+					//bat 'docker run -dp 5001:5000 abenyahya98/app'
+				}
+			}
+		}	
+		//stage('logging into dockerhub') {
+			//steps {
+				//bat "docker login -u=${DOCKERHUB_CREDENTIALS_USR} -p=${DOCKERHUB_CREDENTIALS_PSW}"
+			//}
+		//}
         
-        //stage('pushing image to dockerhub') {
-            //steps {
-            //bat 'docker push abenyahya98/app:latest'
-            //}
-        //}
-}
+        	//stage('pushing image to dockerhub') {
+			//steps {
+				//bat 'docker push abenyahya98/app:latest'
+			//}
+		//}
+	}
     //post {
     //    always {
     //        bat 'docker logout'
