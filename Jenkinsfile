@@ -17,22 +17,15 @@ pipeline {
 			}
 		    }
 		}
-		stage('Create staging branch') {
+		stage('Create staging branch and push') {
 			steps {
 				dir("LivrableCICD") {
 					echo "Creating staging branch from dev branch"
-					bat '''
-					if exist .git/refs/heads/staging (
-					git checkout main
-					git branch -D staging
-					)
-					'''
-					bat "git checkout dev"
-					bat "git checkout -b staging"
-
 					//SSH private key authentication using ssh step from the ssh-agent plugin
 					sshagent(credentials: ['github-sshagent']){
-					bat 'git push --set-upstream origin staging'
+						bat 'git branch --delete staging'
+						bat 'git checkout -b staging'
+						bat 'git push --set-upstream origin staging'
 					}
 					// credentialsId here is the credentials you have set up in Jenkins for pushing
 					// to that repository using username and password.
