@@ -103,9 +103,11 @@ pipeline {
 		}
 		stage('Delete remote branch') {
 			steps {
-				echo "deleted staging"
-				sshagent(credentials: ['github-auth-key']){
-					bat 'git push origin --delete staging'
+				dir("LivrableCICD"){
+					echo "deleted staging"
+					sshagent(credentials: ['github-auth-key']){
+						bat 'git push origin --delete staging'
+					}
 				}
 			}
 		}
