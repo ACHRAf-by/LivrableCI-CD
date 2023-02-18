@@ -22,7 +22,7 @@ pipeline {
 				script {
 					echo "Creating staging branch from dev branch"
 					//SSH private key authentication using ssh step from the ssh-agent plugin
-					sshagent(credentials: ['github-sshagent']){
+					sshagent(credentials: ['github-auth-key']){
 						bat '''
 						if exist .git/refs/heads/staging (
 							git checkout main
@@ -31,7 +31,7 @@ pipeline {
 						'''
 						bat 'git checkout dev'
 						bat 'git checkout -b staging'
-						bat 'git push --set-upstream origin staging'
+						bat 'git push origin staging'
 					}
 					
 					// credentialsId here is the credentials you have set up in Jenkins for pushing
