@@ -51,6 +51,9 @@ pipeline {
 					echo "Merge changes in the staging branch with the main"
 					sshagent( credentials: ['github-auth-key']){
 						bat 'git checkout main'
+						bat 'git fetch'
+						bat 'git config pull.rebase false'
+						bat 'git pull'
 						bat 'git merge staging'
 						bat 'git push origin main'
 					}
@@ -123,7 +126,7 @@ pipeline {
             		bat 'docker rm ci_cd_container'
 			
 			// Remove dangling images
-			//bat 'docker image prune -a --filter "dangling=true" -f'
+			bat 'docker image prune -a --filter "dangling=true" -f'
 		}
 	}
 }
