@@ -21,7 +21,7 @@ pipeline {
 		}
 		stage('Create staging branch and push') {
 			steps {
-				script {
+				dir("LivrableCICD") {
 					echo "Creating staging branch from dev branch"
 					//SSH private key authentication using ssh step from the ssh-agent plugin
 					sshagent(credentials: ['github-auth-key']){
@@ -47,7 +47,7 @@ pipeline {
         	}
 		stage('Merge staging branch with the main') {
 			steps {
-				script {
+				dir("LivrableCICD") {
 					echo "Merge changes in the staging branch with the main"
 					sshagent( credentials: ['github-auth-key']){
 						bat 'git checkout main'
