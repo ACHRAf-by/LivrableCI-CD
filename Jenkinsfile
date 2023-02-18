@@ -102,6 +102,7 @@ pipeline {
     	
 	post {
 		always {
+			echo "Post script steps"
 			//bat 'docker logout'
 		}
 	}
