@@ -21,18 +21,18 @@ pipeline {
             steps {
                 dir("LivrableCICD"){
                     echo "Creating staging branch from dev branch"
-                    bat '''
-                    if exist .git/refs/heads/staging (
-                        git checkout main
-                        git branch -D staging
-                    )
-                    '''
-                    bat "git checkout dev"
-                    bat "git checkout -b staging"
+                    //bat '''
+                    //if exist .git/refs/heads/staging (
+                    //    git checkout main
+                    //    git branch -D staging
+                    //)
+                    //'''
+                    //bat "git checkout dev"
+                    //bat "git checkout -b staging"
 
                     //SSH private key authentication using ssh step from the ssh-agent plugin
-                    sshagent(credentials: ['github-sshagent']){
-                        bat 'git push --set-upstream origin staging'
+                    //sshagent(credentials: ['github-sshagent']){
+                    //    bat 'git push --set-upstream origin staging'
                     }
                     
                     // credentialsId here is the credentials you have set up in Jenkins for pushing
@@ -76,25 +76,25 @@ pipeline {
             }
         }
         
-        stage('logging into dockerhub') {
-            steps {
-                bat "docker login -u=${DOCKERHUB_CREDENTIALS_USR} -p=${DOCKERHUB_CREDENTIALS_PSW}"
-            }
-        }
+        //stage('logging into dockerhub') {
+        //    steps {
+        //        bat "docker login -u=${DOCKERHUB_CREDENTIALS_USR} -p=${DOCKERHUB_CREDENTIALS_PSW}"
+        //    }
+        //}
         
-        stage('pushing image to dockerhub') {
-            steps {
-                bat 'docker push abenyahya98/app:latest'
-            }
-        }
-    }
-    post {
-        always {
-            bat 'docker logout'
+        //stage('pushing image to dockerhub') {
+        //    steps {
+        //        bat 'docker push abenyahya98/app:latest'
+        //    }
+        //}
+    //}
+    //post {
+    //    always {
+    //        bat 'docker logout'
             //sshagent(credentials: ['github-sshagent']){
                 //bat 'git push origin -D staging'
             //}
-            echo "deleted staging"
+    //        echo "deleted staging"
             //stage('Cleanup') {
                 //steps {
                     // Stop and remove container
@@ -102,7 +102,7 @@ pipeline {
                     //sh 'docker rm my-container'
                     // Remove unused images and volumes
                     //sh 'docker image prune -af'
-                    //sh 'docker volume prune -f'
-                 }
-            }
+    //                //sh 'docker volume prune -f'
+    //            }
+    //        }
     }
