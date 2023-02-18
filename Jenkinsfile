@@ -52,7 +52,6 @@ pipeline {
 					sshagent( credentials: ['github-auth-key']){
 						bat 'git checkout main'
 						bat 'git fetch'
-						bat 'git config pull.rebase false'
 						bat 'git pull'
 						bat 'git merge staging'
 						bat 'git push origin main'
