@@ -22,17 +22,17 @@ pipeline {
 				script {
 					echo "Creating staging branch from dev branch"
 					//SSH private key authentication using ssh step from the ssh-agent plugin
-					sshagent(credentials: ['github-auth-key']){
-						bat '''
-						if exist .git/refs/heads/staging (
-							git checkout main
-							git branch -D staging
-						)
-						'''
-						bat 'git checkout dev'
-						bat 'git checkout -b staging'
-						bat 'git push origin staging'
-					}
+					//sshagent(credentials: ['github-auth-key']){
+					//	bat '''
+					//	if exist .git/refs/heads/staging (
+					//		git checkout main
+					//		git branch -D staging
+					//	)
+					//	'''
+					//	bat 'git checkout dev'
+					//	bat 'git checkout -b staging'
+					//	bat 'git push origin staging'
+					//}
 					
 					// credentialsId here is the credentials you have set up in Jenkins for pushing
 					// to that repository using username and password.
@@ -46,7 +46,7 @@ pipeline {
 			steps {
 				dir("LivrableCICD") {
 					echo "pip install -r requirements.txt"
-					//bat 'pip install -r requirements.txt'
+					bat 'pip install -r requirements.txt'
 				}
 			}
 		}
@@ -54,7 +54,7 @@ pipeline {
 			steps {
 				dir("LivrableCICD") {
 					echo "pyhton -m unittest"
-					//bat 'python -m unittest'
+					bat 'python -m unittest'
 				}
 			}
 		}
@@ -73,21 +73,21 @@ pipeline {
 		}	
 		stage('Logging into dockerhub') {
 			steps {
-				bat "docker login -u=${DOCKERHUB_CREDENTIALS_USR} -p=${DOCKERHUB_CREDENTIALS_PSW}"
+				//bat "docker login -u=${DOCKERHUB_CREDENTIALS_USR} -p=${DOCKERHUB_CREDENTIALS_PSW}"
 			}
 		}
         
         	stage('Pushing image to dockerhub') {
 			steps {
-				bat 'docker push abenyahya98/app:latest'
+				//bat 'docker push abenyahya98/app:latest'
 			}
 		}
 		stage('Cleanup') {
 			steps {
 				echo "deleted staging"
-				sshagent(credentials: ['github-sshagent']){
-					bat 'git push origin -D staging'
-				}
+				//sshagent(credentials: ['github-sshagent']){
+				//	bat 'git push origin -D staging'
+				//}
 			}
 			// Stop and remove container
     			//sh 'docker stop my-container'
@@ -100,7 +100,7 @@ pipeline {
     	
 	post {
 		always {
-			bat 'docker logout'
+			//bat 'docker logout'
 		}
 	}
 }
