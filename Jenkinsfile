@@ -33,7 +33,7 @@ pipeline {
 						'''
 						bat 'git checkout dev'
 						bat 'git checkout -b staging'
-						bat 'git push origin staging'
+						bat 'git push -u origin staging'
 					}
 					
 					// I tried this before fixing the ssh-agent problem 
