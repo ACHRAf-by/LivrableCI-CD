@@ -28,7 +28,7 @@ pipeline {
 						bat '''
 						if exist .git/refs/heads/staging (
 							git checkout main
-							git branch -D staging
+							git branch --delete staging
 						)
 						'''
 						bat 'git checkout dev'
@@ -93,7 +93,7 @@ pipeline {
 			steps {
 				echo "deleted staging"
 				sshagent(credentials: ['github-auth-key']){
-					bat 'git push -D origin staging'
+					bat 'git push origin --delete staging'
 				}
 			}
 		}
