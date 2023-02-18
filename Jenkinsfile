@@ -65,12 +65,14 @@ pipeline {
 			steps {
 				dir("LivrableCICD") {
 					echo "docker"
-					//echo "Stop running container using the image name to free the port"
-					//powershell 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=abenyahya98/app --format="{{.ID}}"))'
 					echo "Build image"
 					bat 'docker image build -t abenyahya98/app .'
 					echo "Run image"
 					bat 'docker run -dp 5001:5000  --name ci_cd_container abenyahya98/app'
+					
+					// Before adding the post block (cleanup), I was stopping and deleting container like this
+					//echo "Stop running container using the image name to free the port"
+					//powershell 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=abenyahya98/app --format="{{.ID}}"))'
 				}
 			}
 		}	
