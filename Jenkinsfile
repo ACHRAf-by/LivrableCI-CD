@@ -73,12 +73,14 @@ pipeline {
 		}	
 		stage('Logging into dockerhub') {
 			steps {
+				echo "Logging into dockerhub"
 				//bat "docker login -u=${DOCKERHUB_CREDENTIALS_USR} -p=${DOCKERHUB_CREDENTIALS_PSW}"
 			}
 		}
         
         	stage('Pushing image to dockerhub') {
 			steps {
+				echo "Pushing Image to dockerhub"
 				//bat 'docker push abenyahya98/app:latest'
 			}
 		}
