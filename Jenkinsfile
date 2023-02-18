@@ -2,7 +2,9 @@ pipeline {
     agent any
 
 	//environment {
-		//DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+		def pip = "C:/Users/abenyahya/scoop/apps/python/current/Scripts/pip" 
+		def python = "C:/Users/abenyahya/scoop/apps/python/current/python"
+		DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
 	//}
 
 	stages {
@@ -46,7 +48,7 @@ pipeline {
 			steps {
 				dir("LivrableCICD") {
 					echo "pip install -r requirements.txt"
-					bat 'pip install -r requirements.txt'
+					bat "${pip} install -r requirements.txt"
 				}
 			}
 		}
@@ -54,7 +56,7 @@ pipeline {
 			steps {
 				dir("LivrableCICD") {
 					echo "pyhton -m unittest"
-					bat 'python -m unittest'
+					bat "${python} -m unittest"
 				}
 			}
 		}
