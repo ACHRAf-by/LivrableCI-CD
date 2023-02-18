@@ -1,11 +1,11 @@
 pipeline {
     agent any
 
-	//environment {
+	environment {
 		def pip = "C:/Users/abenyahya/scoop/apps/python/current/Scripts/pip" 
 		def python = "C:/Users/abenyahya/scoop/apps/python/current/python"
 		DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-	//}
+	}
 
 	stages {
 		stage('Clone from github') {
