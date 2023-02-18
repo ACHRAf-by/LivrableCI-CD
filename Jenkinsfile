@@ -64,40 +64,41 @@ pipeline {
 					echo "docker"
 					//echo "Stop running container using the image name to free the port"
 					//powershell 'docker rm $(docker stop $(docker ps -a -q --filter ancestor=abenyahya98/app --format="{{.ID}}"))'
-					//echo "Build image"
-					//bat 'docker build -t abenyahya98/app .'
-					//echo "Run image"
-					//bat 'docker run -dp 5001:5000 abenyahya98/app'
+					echo "Build image"
+					bat 'docker build -t abenyahya98/app .'
+					echo "Run image"
+					bat 'docker run -dp 5001:5000 abenyahya98/app'
 				}
 			}
 		}	
-		//stage('logging into dockerhub') {
-			//steps {
-				//bat "docker login -u=${DOCKERHUB_CREDENTIALS_USR} -p=${DOCKERHUB_CREDENTIALS_PSW}"
-			//}
-		//}
+		stage('Logging into dockerhub') {
+			steps {
+				bat "docker login -u=${DOCKERHUB_CREDENTIALS_USR} -p=${DOCKERHUB_CREDENTIALS_PSW}"
+			}
+		}
         
-        	//stage('pushing image to dockerhub') {
-			//steps {
-				//bat 'docker push abenyahya98/app:latest'
-			//}
-		//}
+        	stage('Pushing image to dockerhub') {
+			steps {
+				bat 'docker push abenyahya98/app:latest'
+			}
+		}
+		stage('Cleanup') {
+			echo "deleted staging"
+			sshagent(credentials: ['github-sshagent']){
+				bat 'git push origin -D staging'
+			}
+			// Stop and remove container
+    			//sh 'docker stop my-container'
+    			//sh 'docker rm my-container'
+    			// Remove unused images and volumes
+    			//sh 'docker image prune -af'
+			//sh 'docker volume prune -f'
+		}
 	}
-    //post {
-    //    always {
-    //        bat 'docker logout'
-    //sshagent(credentials: ['github-sshagent']){
-    //bat 'git push origin -D staging'
-    //}
-    //        echo "deleted staging"
-    //stage('Cleanup') {
-    //steps {
-    // Stop and remove container
-    //sh 'docker stop my-container'
-    //sh 'docker rm my-container'
-    // Remove unused images and volumes
-    //sh 'docker image prune -af'
-    //                //sh 'docker volume prune -f'
-    //            }
-    //        }
+    	
+	post {
+		always {
+			bat 'docker logout'
+		}
+	}
 }
