@@ -12,7 +12,7 @@ pipeline {
                 dir("LivrableCICD") {
                     echo 'clone git repo'
                     git branch: 'dev',
-                    credentialsId: 'jenkins',
+                    credentialsId: 'jenkins-deploy-key',
                     url: 'git@github.com:ACHRAf-by/LivrableCI-CD.git'
                     bat 'dir'
                 }
