@@ -10,7 +10,7 @@ pipeline {
 	stages {
 		stage('Clone from github') {
 		    steps {
-			dir("LivrableCICD") {
+			dir("Jenkins_CI_CD") {
 			    echo 'clone git repo'
 			    git branch: 'dev',
 			    credentialsId: 'jenkins-deploy-key',
@@ -21,7 +21,7 @@ pipeline {
 		}
 		stage('Create staging branch and push') {
 			steps {
-				dir("LivrableCICD") {
+				dir("Jenkins_CI_CD") {
 					echo "Creating staging branch from dev branch"
 					//SSH private key authentication using ssh step from the ssh-agent plugin
 					sshagent(credentials: ['github-auth-key']){
@@ -47,7 +47,7 @@ pipeline {
         	}
 		stage('Merge staging branch with the main') {
 			steps {
-				dir("LivrableCICD") {
+				dir("Jenkins_CI_CD") {
 					echo "Merge changes in the staging branch with the main"
 					sshagent( credentials: ['github-auth-key']){
 						bat 'git checkout main'
@@ -59,7 +59,7 @@ pipeline {
 		}
         	stage('Build from github') {
 			steps {
-				dir("LivrableCICD") {
+				dir("Jenkins_CI_CD") {
 					echo "pip install -r requirements.txt"
 					bat "${pip} install -r requirements.txt"
 				}
@@ -67,7 +67,7 @@ pipeline {
 		}
 		stage('Test from github') {
 			steps {
-				dir("LivrableCICD") {
+				dir("Jenkins_CI_CD") {
 					echo "pyhton -m unittest"
 					bat "${python} -m unittest"
 				}
@@ -75,7 +75,7 @@ pipeline {
 		}
 		stage('deploying from github') {
 			steps {
-				dir("LivrableCICD") {
+				dir("Jenkins_CI_CD") {
 					echo "docker"
 					echo "Build image"
 					bat 'docker image build -t abenyahya98/app .'
@@ -103,7 +103,7 @@ pipeline {
 		}
 		stage('Delete remote branch') {
 			steps {
-				dir("LivrableCICD"){
+				dir("Jenkins_CI_CD"){
 					echo "deleted staging"
 					sshagent(credentials: ['github-auth-key']){
 						bat 'git push origin --delete staging'
