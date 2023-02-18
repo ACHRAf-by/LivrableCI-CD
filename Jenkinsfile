@@ -107,10 +107,6 @@ pipeline {
 			// Stop and remove container
             		bat 'docker stop ci_cd_container'
             		bat 'docker rm ci_cd_container'
-
-            		// Remove unused images, dangling images and volume 
-            		bat 'docker image prune -af'
-           		bat 'docker volume prune -f'
 		}
 	}
 }
