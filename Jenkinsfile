@@ -51,6 +51,8 @@ pipeline {
 					echo "Merge changes in the staging branch with the main"
 					sshagent( credentials: ['github-auth-key']){
 						bat 'git checkout main'
+						bat 'git fetch'
+						bat 'git pull'
 						bat 'git merge staging'
 						bat 'git push origin main'
 					}
