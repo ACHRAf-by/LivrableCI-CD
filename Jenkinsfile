@@ -83,9 +83,11 @@ pipeline {
 			}
 		}
 		stage('Cleanup') {
-			echo "deleted staging"
-			sshagent(credentials: ['github-sshagent']){
-				bat 'git push origin -D staging'
+			steps {
+				echo "deleted staging"
+				sshagent(credentials: ['github-sshagent']){
+					bat 'git push origin -D staging'
+				}
 			}
 			// Stop and remove container
     			//sh 'docker stop my-container'
