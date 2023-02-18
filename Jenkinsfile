@@ -45,7 +45,17 @@ pipeline {
                 		}
             		}
         	}
-        	stage('build from github') {
+		stage('Merge staging branch with the main') {
+			steps {
+				script {
+					echo "Merge changes in the staging branch with the main"
+					sshagent( credentials: ['github-auth-key']){
+						bat 'git merge main'
+					}
+				}
+			}
+		}
+        	stage('Build from github') {
 			steps {
 				dir("LivrableCICD") {
 					echo "pip install -r requirements.txt"
@@ -53,7 +63,7 @@ pipeline {
 				}
 			}
 		}
-		stage('test from github') {
+		stage('Test from github') {
 			steps {
 				dir("LivrableCICD") {
 					echo "pyhton -m unittest"
