@@ -30,7 +30,7 @@ pipeline {
                     bat "git checkout dev"
                     bat "git checkout -b staging"
 
-                    SSH private key authentication using ssh step from the ssh-agent plugin
+                    //SSH private key authentication using ssh step from the ssh-agent plugin
                     sshagent(credentials: ['github-sshagent']){
                         bat 'git push --set-upstream origin staging'
                     }
