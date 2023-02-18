@@ -28,7 +28,7 @@ pipeline {
 						bat '''
 						if exist .git/refs/heads/staging (
 							git checkout main
-							git branch --delete staging
+							git branch -D staging
 						)
 						'''
 						bat 'git checkout dev'
