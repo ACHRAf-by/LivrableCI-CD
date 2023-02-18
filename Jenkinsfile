@@ -125,7 +125,7 @@ pipeline {
             		bat 'docker rm ci_cd_container'
 			
 			// Remove dangling images
-			bat 'docker image prune -a --filter "dangling=true" -f'
+			//bat 'docker image prune -a --filter "dangling=true" -f'
 		}
 	}
 }
