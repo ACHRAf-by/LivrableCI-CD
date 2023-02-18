@@ -93,7 +93,7 @@ pipeline {
 			steps {
 				echo "deleted staging"
 				sshagent(credentials: ['github-sshagent']){
-					bat 'git push origin -D staging'
+					bat 'git push -D origin staging'
 				}
 			}
 		}
